@@ -7,27 +7,31 @@ import javax.jws.WebService;
 
 @WebService
 public interface Analyzer {
-    @WebMethod(operationName = "Contar palabras")
+    @WebMethod(operationName = "Devolver_texto")
+    @WebResult(name = "resultado")
+    String texto(@WebParam(name = "texto") String text);
+
+    @WebMethod(operationName = "Contar_palabras")
     @WebResult(name = "resultado")
     int words(@WebParam(name = "texto") String text);
 
-    @WebMethod(operationName = "Contar caracteres")
+    @WebMethod(operationName = "Contar_caracteres")
     @WebResult(name = "resultado")
     int charac(@WebParam(name = "texto") String text);
 
-    @WebMethod(operationName = "Contar frases")
+    @WebMethod(operationName = "Contar_frases")
     @WebResult(name = "resultado")
     int sentences(@WebParam(name = "texto") String text);
 
-    @WebMethod(operationName = "Contar usos")
+    @WebMethod(operationName = "Contar_usos")
     @WebResult(name = "resultado")
     int wordCount(@WebParam(name = "texto") String text, @WebParam(name = "palabra") String palabra);
 
-    @WebMethod(operationName = "Mas usada")
+    @WebMethod(operationName = "Mas_usada")
     @WebResult(name = "resultado")
     String mostWord(@WebParam(name = "texto") String text);
 
-    @WebMethod(operationName = "Menos usada")
+    @WebMethod(operationName = "Menos_usada")
     @WebResult(name = "resultado")
     String lessWord(@WebParam(name = "texto") String text);
 

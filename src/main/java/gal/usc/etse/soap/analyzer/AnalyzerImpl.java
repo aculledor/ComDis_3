@@ -6,9 +6,14 @@ import java.util.Map;
 
 @WebService(
         endpointInterface = "gal.usc.etse.soap.analyzer.Analyzer",
-        serviceName = "Calculator"
+        serviceName = "Analyzer"
 )
 public class AnalyzerImpl implements Analyzer {
+    @Override
+    public String texto(String text) {
+        return text;
+    }
+
     @Override
     public int words(String texto) {
         if(texto == null || texto.isEmpty())
@@ -28,7 +33,7 @@ public class AnalyzerImpl implements Analyzer {
     public int sentences(String texto) {
         if(texto == null || texto.isEmpty())
             return 0;
-        String[] palabras = texto.split("\\s.");
+        String[] palabras = texto.split("[\\.\\?!]");
         return palabras.length;
     }
 
@@ -88,31 +93,30 @@ public class AnalyzerImpl implements Analyzer {
     public String lessWord(String texto) {
         if(texto == null || texto.isEmpty())
             return "";
-        int maxValue = 0, val;
-        String mostCommon = "", key;
+        int minValue = 999999, val;
+        String lessCommon = "", key;
 
         Map<String, Integer> map = this.wordAppearance(texto);
 
         for ( Map.Entry<String,Integer> entry : map.entrySet()){
             key  = entry.getKey();
             val = entry.getValue();
-            if (val > maxValue){
-                maxValue = val;
-                mostCommon = key;
+            if (val < minValue){
+                minValue = val;
+                lessCommon = key;
             }
             // Si hay empate se reemplaza
-            else if (val == maxValue && mostCommon.compareTo(key) > 0)
-                mostCommon = key;
+            else if (val == minValue && lessCommon.compareTo(key) > 0)
+                lessCommon = key;
         }
-        return mostCommon;
+        return lessCommon;
     }
 
     @Override
     public String swapWord(String texto, String objetivo, String reemplazo) {
         if(texto == null || texto.isEmpty())
             return "";
-        texto.replaceAll(objetivo, reemplazo);
-        return texto;
+        return texto.replaceAll(objetivo, reemplazo);
     }
 
 
